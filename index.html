@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Dawn of Puzzles</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffe7a3">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>🌅 Dawn of Puzzles</h1>
+    <p class="tagline">Light, playful jigsaws in a field of wildflowers.</p>
+  </header>
+
+  <main class="app-main">
+    <section class="controls">
+      <div class="row">
+        <label>
+          Tier
+          <select id="tier">
+            <option value="beginner" selected>Beginner (10–50)</option>
+            <option value="intermediate">Intermediate (50–300)</option>
+            <option value="hard">Hard (300–1000)</option>
+          </select>
+        </label>
+
+        <label>
+          Pieces
+          <input id="pieceCount" type="number" min="10" max="1000" step="1" value="24" style="width:6rem">
+        </label>
+
+        <label>
+          Theme
+          <select id="theme">
+            <option value="wildflowers" selected>Wildflowers (default)</option>
+            <option value="halloween">Halloween</option>
+            <option value="thanksgiving">Thanksgiving</option>
+            <option value="christmas">Christmas</option>
+            <option value="fourth">Fourth of July</option>
+            <option value="paperback">Spooky Paperback</option>
+          </select>
+        </label>
+
+        <label>
+          Mode
+          <select id="mode">
+            <option value="free" selected>Free Play</option>
+            <option value="daily">Daily Challenge</option>
+          </select>
+        </label>
+
+        <button id="newGameBtn">New Puzzle</button>
+        <button id="shuffleBtn">Shuffle</button>
+        <button id="peekBtn" title="Show the completed image briefly">Peek</button>
+      </div>
+
+      <div class="row">
+        <label class="file">
+          <input type="file" id="imageInput" accept="image/*">
+          <span>Upload Custom Image</span>
+        </label>
+        <button id="aiSuggestBtn">AI Suggest Prompt</button>
+        <select id="aiPromptList" title="Prompt ideas for generating images with your preferred AI tool"></select>
+        <button id="useDemoBtn">Use Demo Image</button>
+        <button id="submitScoreBtn" title="Submit to cloud leaderboard (if configured)">Submit Score</button>
+      </div>
+    </section>
+
+    <section class="board">
+      <canvas id="board" width="960" height="600" aria-label="Jigsaw board"></canvas>
+      <div id="peekOverlay" class="peek hidden">
+        <img id="peekImage" alt="reference" />
+      </div>
+    </section>
+
+    <section class="stats">
+      <div>⏱️ Time: <span id="time">00:00</span></div>
+      <div>🧩 Placed: <span id="placed">0</span> / <span id="totalPieces">0</span></div>
+      <div>⭐ Best (this piece count): <span id="best">—</span></div>
+    </section>
+
+    <section class="highscores">
+      <h2>Local High Scores</h2>
+      <ol id="scoresList"></ol>
+      <details>
+        <summary>Cloud Leaderboard (optional)</summary>
+        <div id="cloudStatus">Not configured</div>
+        <ol id="cloudScores"></ol>
+      </details>
+    </section>
+
+    <section class="howto">
+      <details>
+        <summary>How to play</summary>
+        <ul>
+          <li>Choose <em>Free Play</em> or <em>Daily Challenge</em>.</li>
+          <li>In Free Play, pick a tier and exact piece count. In Daily, the puzzle is seeded by today’s date.</li>
+          <li>Upload an image or click <em>Use Demo Image</em>.</li>
+          <li>Drag pieces (mouse or touch). Tabs will interlock visually; pieces snap when near their correct spot.</li>
+          <li>High scores save locally per piece count. You can also submit to the cloud if configured.</li>
+        </ul>
+        <p><strong>Tip:</strong> On iPhone, use Share → <em>Add to Home Screen</em> for full-screen play.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>© 2025 Dawn of Puzzles • MIT License • Offline-capable PWA.</small>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="daily.js"></script>
+  <script src="main.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+  </script>
+</body>
+</html>
